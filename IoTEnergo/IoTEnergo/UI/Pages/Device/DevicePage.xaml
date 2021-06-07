@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:IoTEnergo.BL.Behaviors"
+             x:Class="IoTEnergo.UI.Pages.Device.DevicePage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
+             xmlns:viewModelBase="clr-namespace:IoTEnergo.BL.ViewModels.Base"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="True"
+             Shell.TabBarIsVisible="True" Title="Device Page">
+    <ContentPage.ToolbarItems>
+        <!--<ToolbarItem IconImageSource="map.png" Command="{Binding MapCommand}"/>-->
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="DeviceListView" ItemsSource="{Binding Devices}" CachingStrategy="RecycleElement" RowHeight="80"
+                      SelectionMode="None"
+                      IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Margin="10">
+                                <Label Text="{Binding Name, StringFormat=' {0}'}" FontAttributes="Bold" FontSize="Large" />
+                                <Label Text="{Binding Id}" FontSize="Medium"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior Command="{Binding DeviceTappedCommand}" EventName="ItemTapped"/>
+                </ListView.Behaviors>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
